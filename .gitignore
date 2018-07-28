@@ -1,2 +1,4 @@
 *.o
+iso/*.iso
+*/.DS_Store
 kernel
