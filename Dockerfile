@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 MAINTAINER mamounothman@gmail.com
 
-RUN apt install build-essintials gcc nasm -y
+RUN apt install build-essintials gcc nasm   grub2 xorriso -y
 
 ADD ./ /os
 
