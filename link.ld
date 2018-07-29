@@ -1,6 +1,6 @@
-/*
+/* 
  *
- *
+ * reference https://wiki.osdev.org/Linker_Scripts
  */
 
 OUTPUT_FORMAT(elf32-i386)

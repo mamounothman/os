@@ -1,20 +1,25 @@
-build: kernel
-	ld -m elf_i386 -T link.ld -o ./os/boot/kernel kasm.o kc.o
+INC = $(shell find include/*.c)
+OBJ = ${INC:.c=.o}
+
+COM = gcc -m32
+GCCFLAGS = -ffreestanding
+
+build: kernel $(OBJ)
+	ld -m elf_i386 -T link.ld $^ kasm.o -o ./os/boot/kernel
 
 kernel: asm
-	gcc -m32 -c kernel.c -o kc.o
+	$(COM) $(GCCFLAGS) -c kernel.c -o kernel 
+
+%.o: %.c
+	$(COM) $(GCCFLAGS) -c $< -o $@
 
 asm:
 	nasm -f elf32 kernel.asm -o kasm.o
-
-run:
-	qemu-system-i386 -kernel kernel
 
 dist:
 	grub-mkrescue -o ./iso/os.iso os/
 
 clean:
-	rm *.o
+	rm *.o include/*.o ./os/boot/kernel iso/*
 
-cleanall:
-	rm *.o ./os/boot/kernel
+.PHONY: clean
